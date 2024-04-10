@@ -1,5 +1,5 @@
 I was asked to develop a API server with these 
-<a href="https://github.com/noud/bumbal/doc/">Specifications</a>.
+<a href="https://github.com/noud/bumbal/doc/Test assignment for back-end developer.pdf">Specifications</a>.
 
 To get me a Laravel Docker project environment i executed 
 ```
