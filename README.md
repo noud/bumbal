@@ -39,7 +39,7 @@ to stop the docker container services.
 
 ### Database
 
-There are 2 database migrations for the Devices and Employees tables.
+There are 2 database migrations for the Employees and the Devices tables.
 - <a href="https://github.com/noud/bumbal/blob/main/database/migrations/2024_04_11_142451_create_employees_table.php">create_employees_table</a>.
 - <a href="https://github.com/noud/bumbal/blob/main/database/migrations/2024_04_11_142556_create_devices_table.php">create_devices_table</a>.
 
@@ -47,3 +47,10 @@ Database migrations can ben run by:
 ```
 cd bumbal && .vendor/bin/sail  artisan migrate
 ```
+
+### Models
+
+There is the given User model and 2 models for our Employee and Device.
+- <a href="https://github.com/noud/bumbal/blob/main/app/Models/Employee.php">Employee</a>.
+- <a href="https://github.com/noud/bumbal/blob/main/app/Models/Device.php">Device</a>.
+- <a href="https://github.com/noud/bumbal/blob/main/app/Models/User.php">User</a>.
