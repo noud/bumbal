@@ -36,3 +36,14 @@ I get
 cd bumbal && ./vendor/bin/sail stop
 ```
 to stop the docker container services.
+
+### Database
+
+There are 2 database migrations for the Devices and Employees tables.
+- <a href="https://github.com/noud/bumbal/blob/main/database/migrations/2024_04_11_142451_create_employees_table.php">create_employees_table</a>.
+- <a href="https://github.com/noud/bumbal/blob/main/database/migrations/2024_04_11_142556_create_devices_table.php">create_devices_table</a>.
+
+Database migrations can ben run by:
+```
+cd bumbal && .vendor/bin/sail  artisan migrate
+```
