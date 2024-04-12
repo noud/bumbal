@@ -69,3 +69,20 @@ There are controllers for the API endpoints.
 
 -<a href="https://github.com/noud/bumbal/blob/main/app/Http/Controllers/api/EmployeeController.php">EmployeeController.php</a>
 
+so i have the following API endpoints:
+```
+$ ./vendor/bin/sail  artisan route:list --path=api
+
+  POST      api/v1/employee ..................... api\EmployeeController@store
+  GET|HEAD  api/v1/employee/{id} ................. api\EmployeeController@show
+  PUT       api/v1/employee/{id} ............... api\EmployeeController@update
+  DELETE    api/v1/employee/{id} .............. api\EmployeeController@destroy
+  GET|HEAD  api/v1/employees .................... api\EmployeeController@index
+  POST      api/v1/login ............................ api\AuthController@login
+  POST      api/v1/logout .......................... api\AuthController@logout
+  POST      api/v1/refresh ........................ api\AuthController@refresh
+  POST      api/v1/register ...................... api\AuthController@register
+
+                                                            Showing [9] routes
+
+```
