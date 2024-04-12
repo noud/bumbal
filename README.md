@@ -45,7 +45,7 @@ There are 2 database migrations for the Employees and the Devices tables.
 
 Database migrations can ben run by:
 ```
-cd bumbal && .vendor/bin/sail  artisan migrate
+cd bumbal && .vendor/bin/sail artisan migrate
 ```
 
 ### Models
@@ -54,3 +54,18 @@ There is the given User model and 2 models for our Employee and Device.
 - <a href="https://github.com/noud/bumbal/blob/main/app/Models/Employee.php">Employee</a>.
 - <a href="https://github.com/noud/bumbal/blob/main/app/Models/Device.php">Device</a>.
 - <a href="https://github.com/noud/bumbal/blob/main/app/Models/User.php">User</a>.
+
+### JWT authentication
+
+For JWT authentication i add package ```php-open-source-saver/jwt-auth```.
+```
+cd bumbal && .vendor/bin/sail composer require php-open-source-saver/jwt-auth
+```
+I added <a href="https://github.com/noud/bumbal/blob/main/app/Http/Controllers/api/AuthController.php">AuthController.php</a>
+
+### API
+
+There are controllers for the API endpoints.
+
+-<a href="https://github.com/noud/bumbal/blob/main/app/Http/Controllers/api/EmployeesController.php">EmployeesController.php</a>
+
