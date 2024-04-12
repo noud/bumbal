@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 
-class EmployeesController extends Controller
+class EmployeeController extends Controller
 {
     public function __construct()
     {

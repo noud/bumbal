@@ -12,6 +12,8 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('refresh', 'refresh');
 });
 
+// Route::post('/register', [AuthController::class, 'register']);
+
 Route::controller(EmployeeController::class)->group(function () {
     Route::get('employees', 'index');
     Route::post('employee', 'store');
