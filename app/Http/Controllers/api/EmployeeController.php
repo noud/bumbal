@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\api\ApiController;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 
-class EmployeeController extends Controller
+/**
+* Class EmployeeController
+* @package App\Http\Controllers\api
+*/
+class EmployeeController extends ApiController
 {
     public function __construct()
     {
