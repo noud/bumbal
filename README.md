@@ -68,6 +68,7 @@ I added <a href="https://github.com/noud/bumbal/blob/main/app/Http/Controllers/a
 There are controllers for the API endpoints.
 
 -<a href="https://github.com/noud/bumbal/blob/main/app/Http/Controllers/api/DeviceController.php">DeviceController.php</a>
+
 -<a href="https://github.com/noud/bumbal/blob/main/app/Http/Controllers/api/EmployeeController.php">EmployeeController.php</a>
 
 so i have the following API endpoints:
