@@ -30,10 +30,12 @@ class DeviceController extends ApiController
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'employee_id' => 'required|integer',
         ]);
 
         $device = Device::create([
             'name' => $request->name,
+            'employee_id' => $request->employee_id,
         ]);
 
         return response()->json([
@@ -56,10 +58,12 @@ class DeviceController extends ApiController
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'employee_id' => 'required|integer',
         ]);
 
         $device = Device::find($id);
         $device->name = $request->name;
+        $device->employee_id = $request->employee_id;
         $device->save();
 
         return response()->json([
