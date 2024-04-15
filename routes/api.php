@@ -22,7 +22,7 @@ Route::controller(EmployeeController::class)->group(function () {
 }); 
 
 Route::controller(DeviceController::class)->group(function () {
-    Route::get('devices', 'index');
+    Route::get('devices', 'paginate');
     Route::post('device', 'store');
     Route::get('device/{id}', 'show');
     Route::put('device/{id}', 'update');

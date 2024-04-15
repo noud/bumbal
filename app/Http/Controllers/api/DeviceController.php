@@ -17,9 +17,10 @@ class DeviceController extends ApiController
         $this->middleware('auth:api');
     }
 
-    public function index()
+    public function paginate(Request $request)
     {
-        $devices = Device::all();
+        $page = $request->get('page');
+        $devices = Device::paginate($perPage = 5, ['*'], 'page', $page);
         return response()->json([
             'status' => 'success',
             'devices' => $devices,
