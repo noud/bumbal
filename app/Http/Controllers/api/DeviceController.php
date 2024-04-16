@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\api\ApiController;
 use App\Models\Device;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 /**
 * Class DeviceController
@@ -20,7 +21,12 @@ class DeviceController extends ApiController
     public function paginate(Request $request)
     {
         $page = $request->get('page');
-        $devices = Device::paginate($perPage = 5, ['*'], 'page', $page);
+        $devices = Cache::get('devices_page_' . $page);
+        if ($devices === null) {
+            $devices = Device::paginate($perPage = 5, ['*'], 'page', $page);
+            Cache::put('devices_page_' . $page, $devices, 60);
+        }
+
         return response()->json([
             'status' => 'success',
             'devices' => $devices,
@@ -38,6 +44,7 @@ class DeviceController extends ApiController
             'name' => $request->name,
             'employee_id' => $request->employee_id,
         ]);
+        Cache::put('device_' . $device->id, $device, 60);
 
         return response()->json([
             'status' => 'success',
@@ -48,7 +55,11 @@ class DeviceController extends ApiController
 
     public function show($id)
     {
-        $device = Device::find($id);
+        $device = Cache::get('device_' . $id);
+        if ($device === null) {
+            $device = Device::find($id);
+            Cache::put('device_' . $id, $device, 60);
+        }
         return response()->json([
             'status' => 'success',
             'device' => $device,
@@ -62,10 +73,14 @@ class DeviceController extends ApiController
             'employee_id' => 'required|integer',
         ]);
 
-        $device = Device::find($id);
+        $device = Cache::get('device_' . $id);
+        if ($device === null) {
+            $device = Device::find($id);
+        }
         $device->name = $request->name;
         $device->employee_id = $request->employee_id;
         $device->save();
+        Cache::put('device_' . $id, $device, 60);
 
         return response()->json([
             'status' => 'success',
@@ -78,6 +93,7 @@ class DeviceController extends ApiController
     {
         $device = Device::find($id);
         $device->delete();
+        Cache::forget('device_' . $id);
 
         return response()->json([
             'status' => 'success',

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\api\ApiController;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 /**
 * Class EmployeeController
@@ -19,7 +20,12 @@ class EmployeeController extends ApiController
 
     public function index()
     {
-        $employees = Employee::all();
+        $employees = Cache::get('employees');
+        if ($employees === null) {
+            $employees = Employee::all();
+            Cache::put('employees', $employees, 60);
+        }
+
         return response()->json([
             'status' => 'success',
             'employees' => $employees,
@@ -35,6 +41,7 @@ class EmployeeController extends ApiController
         $employee = Employee::create([
             'name' => $request->name,
         ]);
+        Cache::put('employee_' . $employee->id, $employee, 60);
 
         return response()->json([
             'status' => 'success',
@@ -45,7 +52,12 @@ class EmployeeController extends ApiController
 
     public function show($id)
     {
-        $employee = Employee::find($id);
+        $employee = Cache::get('employee_' . $id);
+        if ($employee === null) {
+            $employee = Employee::find($id);
+            Cache::put('employee_' . $id, $employee, 60);
+        }
+
         return response()->json([
             'status' => 'success',
             'employee' => $employee,
@@ -58,9 +70,13 @@ class EmployeeController extends ApiController
             'name' => 'required|string|max:255',
         ]);
 
-        $employee = Employee::find($id);
+        $employee = Cache::get('employee_' . $id);
+        if ($employee === null) {
+            $employee = Employee::find($id);
+        }
         $employee->name = $request->name;
         $employee->save();
+        Cache::put('employee_' . $id, $employee, 60);
 
         return response()->json([
             'status' => 'success',
@@ -73,6 +89,7 @@ class EmployeeController extends ApiController
     {
         $employee = Employee::find($id);
         $employee->delete();
+        Cache::forget('employee_' . $id);
 
         return response()->json([
             'status' => 'success',
