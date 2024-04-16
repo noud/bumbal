@@ -5,6 +5,13 @@ To get me a Laravel Docker project environment i executed
 ```
 curl -s "https://laravel.build/bumbal?with=mariadb,redis" | bash
 ```
+### Git clone
+
+After you have git cloned this repository you have to install the php packages.
+For this you have to have php >= 8.2.
+```
+cd bumbal && composer install
+```
 
 ### Start containers
 
@@ -17,6 +24,10 @@ sudo systemctl stop apache2.service
 To start the dockered application type
 ```
 cd bumbal && ./vendor/bin/sail up
+```
+If it's the first time you did build the containers you have to add the JWT secret to your .env file.
+```
+cd bumbal && ./vendor/bin/sail artisan jwt:secret
 ```
 
 Finally, you can access the application in your web browser at: <a href="http://localhost">http://localhost</a>.
