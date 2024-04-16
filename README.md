@@ -7,9 +7,10 @@ curl -s "https://laravel.build/bumbal?with=mariadb,redis" | bash
 ```
 ### Git clone
 
-After you have git cloned this repository you have to install the php packages.
+After you have git cloned this repository you have to set the .env file and install the php packages.
 For this you have to have php >= 8.2.
 ```
+cd bumbal && cp .env.example .env
 cd bumbal && composer install
 ```
 
