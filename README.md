@@ -112,3 +112,11 @@ The project has PHPUnit test code, this can be ran like
 ```
 cd bumbal && ./vendor/bin/sail test
 ```
+
+For the tests i have 3 classes:
+
+-<a href="https://github.com/noud/bumbal/blob/main/tests/Feature/AuthControllerTest.php">AuthControllerTest.php</a>
+
+-<a href="https://github.com/noud/bumbal/blob/main/tests/Feature/EmployeeControllerTest.php">EmployeeControllerTest.php</a>
+
+-<a href="https://github.com/noud/bumbal/blob/main/tests/Feature/DeviceControllerTest.php">DeviceControllerTest.php</a>
