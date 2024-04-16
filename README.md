@@ -105,3 +105,10 @@ $ ./vendor/bin/sail  artisan route:list --path=api
                                                            Showing [14] routes
 
 ```
+
+### PHPUnit tests
+
+The project has PHPUnit test code, this can be ran like
+```
+cd bumbal && ./vendor/bin/sail test
+```
