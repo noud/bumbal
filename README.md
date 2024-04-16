@@ -26,9 +26,10 @@ To start the dockered application type
 ```
 cd bumbal && ./vendor/bin/sail up
 ```
-If it's the first time you did build the containers you have to add the JWT secret to your .env file.
+If it's the first time you did build the containers you have to add the JWT secret to your .env file and run the database migrations.
 ```
 cd bumbal && ./vendor/bin/sail artisan jwt:secret
+cd bumbal && ./vendor/bin/sail artisan migrate
 ```
 
 Finally, you can access the application in your web browser at: <a href="http://localhost">http://localhost</a>.
