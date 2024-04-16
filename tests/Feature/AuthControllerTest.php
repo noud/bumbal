@@ -14,6 +14,7 @@ class AuthControllerTest extends TestCase {
     {
         parent::setUp();
         Artisan::call('migrate');
+        DB::table('users')->where('name', 'noud5')->delete();
     }
     
     public function tearDown() :void
@@ -29,8 +30,8 @@ class AuthControllerTest extends TestCase {
     public function testRegister()
     {
         $response = $this->json('post', 'http://localhost/api/v1/register', [
-            'name' => 'noud3',
-            'email' => 'noud3@home.nl',
+            'name' => 'noud5',
+            'email' => 'noud5@home.nl',
             'password' => 'test1234',
         ]);
         // $this->assertEquals(200, $this->response->status());
@@ -51,5 +52,22 @@ class AuthControllerTest extends TestCase {
     //             'type' => 'bearer',
     //         ]
     //    ]);
+    }
+
+    public function testLogin()
+    {
+        $response = $this->json('post', 'http://localhost/api/v1/register', [
+            'name' => 'noud3',
+            'email' => 'noud3@home.nl',
+            'password' => 'test1234',
+        ]);
+
+        $response = $this->json('post', 'http://localhost/api/v1/login', [
+            'email' => 'noud3@home.nl',
+            'password' => 'test1234',
+        ]);       
+        $response->assertStatus(200);
+        $token = $response['authorisation']['token'];
+        // dd($token);
     }
 }
