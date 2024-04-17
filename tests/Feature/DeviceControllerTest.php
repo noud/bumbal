@@ -45,11 +45,6 @@ class DeviceControllerTest extends TestCase {
         parent::tearDown();
     }
 
-    /**
-     * Register test user
-     *
-     * @return void
-     */
     public function testAddDevice()
     {
         $response = $this->json('post', 'http://localhost/api/v1/device', [
@@ -173,6 +168,38 @@ class DeviceControllerTest extends TestCase {
         $response->assertJson([
             'status' => 'error',
             'message' => "Device does not exist.",
+       ]);
+    }
+
+    public function testAddDeviceWithNonExistendEmployee()
+    {
+        $response = $this->json('post', 'http://localhost/api/v1/device', [
+            'name' => 'device 1',
+            'employee_id' => 222,
+        ], ['Authorization' => 'Bearer ' . $this->token]);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 'error',
+            'message' => "Employee does not exist.",
+       ]);
+    }
+
+    public function testUpdateDeviceWithNonExistendEmployee()
+    {
+        $response = $this->json('post', 'http://localhost/api/v1/device', [
+            'name' => 'device 1',
+            'employee_id' => $this->employee_id,
+        ], ['Authorization' => 'Bearer ' . $this->token]);
+        $id = $response['device']['id'];
+
+        $response = $this->json('put', 'http://localhost/api/v1/device/' . $id, [
+            'name' => 'device 2',
+            'employee_id' => 222,
+        ], ['Authorization' => 'Bearer ' . $this->token]);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 'error',
+            'message' => "Employee does not exist.",
        ]);
     }
 

@@ -35,11 +35,6 @@ class EmployeeControllerTest extends TestCase {
         parent::tearDown();
     }
 
-    /**
-     * Register test user
-     *
-     * @return void
-     */
     public function testAddEmployee()
     {
         $response = $this->json('post', 'http://localhost/api/v1/employee', [

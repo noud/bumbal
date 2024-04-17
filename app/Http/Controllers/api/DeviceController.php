@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\api\ApiController;
 use App\Models\Device;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -40,6 +41,19 @@ class DeviceController extends ApiController
             'employee_id' => 'required|integer',
         ]);
 
+        // check if employee exists
+        $employee = Cache::get('employee_' . $request->employee_id);
+        if ($employee === null) {
+            $employee = Employee::find($request->employee_id);
+            if (!$employee) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Employee does not exist.',
+                ]);  
+            }                        
+            Cache::put('employee_' . $request->employee_id, $employee, 60);
+        }
+     
         $device = Device::create([
             'name' => $request->name,
             'employee_id' => $request->employee_id,
@@ -79,6 +93,19 @@ class DeviceController extends ApiController
             'employee_id' => 'required|integer',
         ]);
 
+        // check if employee exists
+        $employee = Cache::get('employee_' . $request->employee_id);
+        if ($employee === null) {
+            $employee = Employee::find($request->employee_id);
+            if (!$employee) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Employee does not exist.',
+                ]);  
+            }                        
+            Cache::put('employee_' . $request->employee_id, $employee, 60);
+        }
+ 
         $device = Cache::get('device_' . $id);
         if ($device === null) {
             $device = Device::find($id);
