@@ -57,7 +57,7 @@ class EmployeeController extends ApiController
             $employee = Employee::find($id);
             if (!$employee) {
                 return response()->json([
-                    'status' => 'failure',
+                    'status' => 'error',
                     'message' => 'Employee does not exist.',
                 ]);  
             }                        
@@ -81,7 +81,7 @@ class EmployeeController extends ApiController
             $employee = Employee::find($id);
             if (!$employee) {
                 return response()->json([
-                    'status' => 'failure',
+                    'status' => 'error',
                     'message' => 'Employee does not exist.',
                 ]);  
             }                        
@@ -102,7 +102,7 @@ class EmployeeController extends ApiController
         $employee = Employee::find($id);
         if (!$employee) {
             return response()->json([
-                'status' => 'failure',
+                'status' => 'error',
                 'message' => 'Employee does not exist.',
             ]);  
         }                        

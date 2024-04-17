@@ -125,7 +125,7 @@ class EmployeeControllerTest extends TestCase {
         , ['Authorization' => 'Bearer ' . $this->token]);
         $response->assertStatus(200);
         $response->assertJson([
-            'status' => 'failure',
+            'status' => 'error',
             'message' => "Employee does not exist.",
        ]);
     }
@@ -138,7 +138,7 @@ class EmployeeControllerTest extends TestCase {
         , ['Authorization' => 'Bearer ' . $this->token]);
         $response->assertStatus(200);
         $response->assertJson([
-            'status' => 'failure',
+            'status' => 'error',
             'message' => "Employee does not exist.",
         ]);
     }
@@ -152,7 +152,7 @@ class EmployeeControllerTest extends TestCase {
         ], ['Authorization' => 'Bearer ' . $this->token]);
         $response->assertStatus(200);
         $response->assertJson([
-            'status' => 'failure',
+            'status' => 'error',
             'message' => "Employee does not exist.",
        ]);
     }

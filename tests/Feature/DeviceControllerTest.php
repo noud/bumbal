@@ -143,7 +143,7 @@ class DeviceControllerTest extends TestCase {
         , ['Authorization' => 'Bearer ' . $this->token]);
         $response->assertStatus(200);
         $response->assertJson([
-            'status' => 'failure',
+            'status' => 'error',
             'message' => "Device does not exist.",
        ]);
     }
@@ -156,7 +156,7 @@ class DeviceControllerTest extends TestCase {
         , ['Authorization' => 'Bearer ' . $this->token]);
         $response->assertStatus(200);
         $response->assertJson([
-            'status' => 'failure',
+            'status' => 'error',
             'message' => "Device does not exist.",
         ]);
     }
@@ -171,7 +171,7 @@ class DeviceControllerTest extends TestCase {
         ], ['Authorization' => 'Bearer ' . $this->token]);
         $response->assertStatus(200);
         $response->assertJson([
-            'status' => 'failure',
+            'status' => 'error',
             'message' => "Device does not exist.",
        ]);
     }

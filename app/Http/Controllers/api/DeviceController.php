@@ -60,7 +60,7 @@ class DeviceController extends ApiController
             $device = Device::find($id);
             if (!$device) {
                 return response()->json([
-                    'status' => 'failure',
+                    'status' => 'error',
                     'message' => 'Device does not exist.',
                 ]);                          
             }
@@ -84,7 +84,7 @@ class DeviceController extends ApiController
             $device = Device::find($id);
             if (!$device) {
                 return response()->json([
-                    'status' => 'failure',
+                    'status' => 'error',
                     'message' => 'Device does not exist.',
                 ]);
             }
@@ -106,7 +106,7 @@ class DeviceController extends ApiController
         $device = Device::find($id);
         if (!$device) {
             return response()->json([
-                'status' => 'failure',
+                'status' => 'error',
                 'message' => 'Device does not exist.',
             ]);
         }
