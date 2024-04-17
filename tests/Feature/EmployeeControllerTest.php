@@ -117,4 +117,44 @@ class EmployeeControllerTest extends TestCase {
             'status' => 'success',
        ]);
     }
+    public function testDeleteNonExistendEmployee()
+    {
+        $id = 222;
+
+        $response = $this->json('delete', 'http://localhost/api/v1/employee/' . $id
+        , ['Authorization' => 'Bearer ' . $this->token]);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 'failure',
+            'message' => "Employee does not exist.",
+       ]);
+    }
+
+    public function testShowNonExistendEmployee()
+    {
+        $id = 222;
+
+        $response = $this->json('get', 'http://localhost/api/v1/employee/' . $id
+        , ['Authorization' => 'Bearer ' . $this->token]);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 'failure',
+            'message' => "Employee does not exist.",
+        ]);
+    }
+
+    public function testUpdateNonExistendEmployee()
+    {
+        $id = 222;
+
+        $response = $this->json('put', 'http://localhost/api/v1/employee/' . $id, [
+            'name' => 'Mortada Abdul Roda',
+        ], ['Authorization' => 'Bearer ' . $this->token]);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 'failure',
+            'message' => "Employee does not exist.",
+       ]);
+    }
+
 }

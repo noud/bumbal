@@ -58,6 +58,12 @@ class DeviceController extends ApiController
         $device = Cache::get('device_' . $id);
         if ($device === null) {
             $device = Device::find($id);
+            if (!$device) {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'Device does not exist.',
+                ]);                          
+            }
             Cache::put('device_' . $id, $device, 60);
         }
         return response()->json([
@@ -76,6 +82,12 @@ class DeviceController extends ApiController
         $device = Cache::get('device_' . $id);
         if ($device === null) {
             $device = Device::find($id);
+            if (!$device) {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'Device does not exist.',
+                ]);
+            }
         }
         $device->name = $request->name;
         $device->employee_id = $request->employee_id;
@@ -92,6 +104,12 @@ class DeviceController extends ApiController
     public function destroy($id)
     {
         $device = Device::find($id);
+        if (!$device) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => 'Device does not exist.',
+            ]);
+        }
         $device->delete();
         Cache::forget('device_' . $id);
 

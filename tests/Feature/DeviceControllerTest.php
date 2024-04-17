@@ -134,4 +134,46 @@ class DeviceControllerTest extends TestCase {
             'status' => 'success',
        ]);
     }
+
+    public function testDeleteNonExistendDevice()
+    {
+        $id = 222;
+
+        $response = $this->json('delete', 'http://localhost/api/v1/device/' . $id
+        , ['Authorization' => 'Bearer ' . $this->token]);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 'failure',
+            'message' => "Device does not exist.",
+       ]);
+    }
+
+    public function testShowNonExistendDevice()
+    {
+        $id = 222;
+
+        $response = $this->json('get', 'http://localhost/api/v1/device/' . $id
+        , ['Authorization' => 'Bearer ' . $this->token]);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 'failure',
+            'message' => "Device does not exist.",
+        ]);
+    }
+
+    public function testUpdateNonExistendDevice()
+    {
+        $id = 222;
+
+        $response = $this->json('put', 'http://localhost/api/v1/device/' . $id, [
+            'name' => 'device 2',
+            'employee_id' => $this->employee_id,
+        ], ['Authorization' => 'Bearer ' . $this->token]);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 'failure',
+            'message' => "Device does not exist.",
+       ]);
+    }
+
 }

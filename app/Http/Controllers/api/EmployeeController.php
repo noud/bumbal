@@ -55,6 +55,12 @@ class EmployeeController extends ApiController
         $employee = Cache::get('employee_' . $id);
         if ($employee === null) {
             $employee = Employee::find($id);
+            if (!$employee) {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'Employee does not exist.',
+                ]);  
+            }                        
             Cache::put('employee_' . $id, $employee, 60);
         }
 
@@ -73,6 +79,12 @@ class EmployeeController extends ApiController
         $employee = Cache::get('employee_' . $id);
         if ($employee === null) {
             $employee = Employee::find($id);
+            if (!$employee) {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'Employee does not exist.',
+                ]);  
+            }                        
         }
         $employee->name = $request->name;
         $employee->save();
@@ -88,6 +100,12 @@ class EmployeeController extends ApiController
     public function destroy($id)
     {
         $employee = Employee::find($id);
+        if (!$employee) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => 'Employee does not exist.',
+            ]);  
+        }                        
         $employee->delete();
         Cache::forget('employee_' . $id);
 
