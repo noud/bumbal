@@ -17,6 +17,8 @@ class DeviceControllerTest extends TestCase {
         parent::setUp();
         Artisan::call('migrate');
         DB::table('devices')->where('name', 'device 1')->delete();
+        DB::table('devices')->where('employee_id', 222)->delete();
+        DB::table('employees')->where('id', 222)->delete();
         $response = $this->json('post', 'http://localhost/api/v1/register', [
             'name' => 'noud3',
             'email' => 'noud3@home.nl',

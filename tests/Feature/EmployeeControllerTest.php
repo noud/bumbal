@@ -15,6 +15,8 @@ class EmployeeControllerTest extends TestCase {
         parent::setUp();
         Artisan::call('migrate');
         DB::table('users')->where('name', 'noud5')->delete();
+        DB::table('devices')->where('employee_id', 222)->delete();
+        DB::table('employees')->where('name', 'Mortada Abdul Roda')->delete();
         $response = $this->json('post', 'http://localhost/api/v1/register', [
             'name' => 'noud3',
             'email' => 'noud3@home.nl',
@@ -50,7 +52,7 @@ class EmployeeControllerTest extends TestCase {
     public function testDeleteEmployee()
     {
         $response = $this->json('post', 'http://localhost/api/v1/employee', [
-            'name' => 'Noud de Brouwer',
+            'name' => 'Mortada Abdul Roda',
         ], ['Authorization' => 'Bearer ' . $this->token]);
         $id = $response['employee']['id'];
 
@@ -149,6 +151,27 @@ class EmployeeControllerTest extends TestCase {
         $response->assertJson([
             'status' => 'error',
             'message' => "Employee does not exist.",
+       ]);
+    }
+
+    public function testDeleteEmployeeThatHasDevices()
+    {
+        $response = $this->json('post', 'http://localhost/api/v1/employee', [
+            'name' => 'Noud de Brouwer',
+        ], ['Authorization' => 'Bearer ' . $this->token]);
+        $id = $response['employee']['id'];
+
+        $response = $this->json('post', 'http://localhost/api/v1/device', [
+            'name' => 'device 1',
+            'employee_id' => $id,
+        ], ['Authorization' => 'Bearer ' . $this->token]);
+     
+        $response = $this->json('delete', 'http://localhost/api/v1/employee/' . $id
+        , ['Authorization' => 'Bearer ' . $this->token]);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 'error',
+            'message' => "Employee still has devices.",
        ]);
     }
 

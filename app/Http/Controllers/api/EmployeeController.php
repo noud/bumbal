@@ -105,7 +105,16 @@ class EmployeeController extends ApiController
                 'status' => 'error',
                 'message' => 'Employee does not exist.',
             ]);  
-        }                        
+        }
+
+        // check if employee still has devices
+        if ($employee->devices()->exists()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Employee still has devices.',
+            ]);  
+        }
+
         $employee->delete();
         Cache::forget('employee_' . $id);
 
