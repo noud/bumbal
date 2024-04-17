@@ -106,6 +106,9 @@ $ ./vendor/bin/sail  artisan route:list --path=api
                                                            Showing [14] routes
 
 ```
+### Routes
+
+The API routes are defined in <a href="https://github.com/noud/bumbal/blob/main/routes/api.php">api.php</a>.
 
 ### PHPUnit tests
 
@@ -121,3 +124,9 @@ For the tests i have 3 classes:
 -<a href="https://github.com/noud/bumbal/blob/main/tests/Feature/EmployeeControllerTest.php">EmployeeControllerTest.php</a>
 
 -<a href="https://github.com/noud/bumbal/blob/main/tests/Feature/DeviceControllerTest.php">DeviceControllerTest.php</a>
+
+### reference
+
+I did read the following articles as refference:
+
+-<a href="https://blog.logrocket.com/implementing-jwt-authentication-laravel-10/">Implementing JWT authentication in Laravel 10</a>
