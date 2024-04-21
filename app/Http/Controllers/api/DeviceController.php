@@ -25,7 +25,7 @@ class DeviceController extends ApiController
         $devices = Cache::get('devices_page_' . $page);
         if ($devices === null) {
             $devices = Device::paginate($perPage = 5, ['*'], 'page', $page);
-            Cache::put('devices_page_' . $page, $devices, 60);
+            Cache::forever('devices_page_' . $page, $devices);
         }
 
         return response()->json([
@@ -51,14 +51,14 @@ class DeviceController extends ApiController
                     'message' => 'Employee does not exist.',
                 ]);  
             }                        
-            Cache::put('employee_' . $request->employee_id, $employee, 60);
+            Cache::forever('employee_' . $request->employee_id, $employee);
         }
      
         $device = Device::create([
             'name' => $request->name,
             'employee_id' => $request->employee_id,
         ]);
-        Cache::put('device_' . $device->id, $device, 60);
+        Cache::forever('device_' . $device->id, $device);
 
         return response()->json([
             'status' => 'success',
@@ -78,7 +78,7 @@ class DeviceController extends ApiController
                     'message' => 'Device does not exist.',
                 ]);                          
             }
-            Cache::put('device_' . $id, $device, 60);
+            Cache::forever('device_' . $id, $device);
         }
         return response()->json([
             'status' => 'success',
@@ -103,7 +103,7 @@ class DeviceController extends ApiController
                     'message' => 'Employee does not exist.',
                 ]);  
             }                        
-            Cache::put('employee_' . $request->employee_id, $employee, 60);
+            Cache::forever('employee_' . $request->employee_id, $employee);
         }
  
         $device = Cache::get('device_' . $id);
@@ -119,7 +119,7 @@ class DeviceController extends ApiController
         $device->name = $request->name;
         $device->employee_id = $request->employee_id;
         $device->save();
-        Cache::put('device_' . $id, $device, 60);
+        Cache::forever('device_' . $id, $device);
 
         return response()->json([
             'status' => 'success',

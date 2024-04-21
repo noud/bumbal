@@ -23,7 +23,7 @@ class EmployeeController extends ApiController
         $employees = Cache::get('employees');
         if ($employees === null) {
             $employees = Employee::all();
-            Cache::put('employees', $employees, 60);
+            Cache::forever('employees', $employees);
         }
 
         return response()->json([
@@ -41,7 +41,7 @@ class EmployeeController extends ApiController
         $employee = Employee::create([
             'name' => $request->name,
         ]);
-        Cache::put('employee_' . $employee->id, $employee, 60);
+        Cache::forever('employee_' . $employee->id, $employee);
 
         return response()->json([
             'status' => 'success',
@@ -61,7 +61,7 @@ class EmployeeController extends ApiController
                     'message' => 'Employee does not exist.',
                 ]);  
             }                        
-            Cache::put('employee_' . $id, $employee, 60);
+            Cache::forever('employee_' . $id, $employee);
         }
 
         return response()->json([
@@ -88,7 +88,7 @@ class EmployeeController extends ApiController
         }
         $employee->name = $request->name;
         $employee->save();
-        Cache::put('employee_' . $id, $employee, 60);
+        Cache::forever('employee_' . $id, $employee);
 
         return response()->json([
             'status' => 'success',
