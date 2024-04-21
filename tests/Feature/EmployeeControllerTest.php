@@ -120,7 +120,7 @@ class EmployeeControllerTest extends TestCase {
 
         $response = $this->json('delete', 'http://localhost/api/v1/employee/' . $id
         , ['Authorization' => 'Bearer ' . $this->token]);
-        $response->assertStatus(200);
+        $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
             'message' => "Employee does not exist.",
@@ -133,7 +133,7 @@ class EmployeeControllerTest extends TestCase {
 
         $response = $this->json('get', 'http://localhost/api/v1/employee/' . $id
         , ['Authorization' => 'Bearer ' . $this->token]);
-        $response->assertStatus(200);
+        $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
             'message' => "Employee does not exist.",
@@ -147,7 +147,7 @@ class EmployeeControllerTest extends TestCase {
         $response = $this->json('put', 'http://localhost/api/v1/employee/' . $id, [
             'name' => 'Mortada Abdul Roda',
         ], ['Authorization' => 'Bearer ' . $this->token]);
-        $response->assertStatus(200);
+        $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
             'message' => "Employee does not exist.",
@@ -168,7 +168,7 @@ class EmployeeControllerTest extends TestCase {
      
         $response = $this->json('delete', 'http://localhost/api/v1/employee/' . $id
         , ['Authorization' => 'Bearer ' . $this->token]);
-        $response->assertStatus(200);
+        $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
             'message' => "Employee still has devices.",

@@ -138,7 +138,7 @@ class DeviceControllerTest extends TestCase {
 
         $response = $this->json('delete', 'http://localhost/api/v1/device/' . $id
         , ['Authorization' => 'Bearer ' . $this->token]);
-        $response->assertStatus(200);
+        $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
             'message' => "Device does not exist.",
@@ -151,7 +151,7 @@ class DeviceControllerTest extends TestCase {
 
         $response = $this->json('get', 'http://localhost/api/v1/device/' . $id
         , ['Authorization' => 'Bearer ' . $this->token]);
-        $response->assertStatus(200);
+        $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
             'message' => "Device does not exist.",
@@ -166,7 +166,7 @@ class DeviceControllerTest extends TestCase {
             'name' => 'device 2',
             'employee_id' => $this->employee_id,
         ], ['Authorization' => 'Bearer ' . $this->token]);
-        $response->assertStatus(200);
+        $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
             'message' => "Device does not exist.",
@@ -179,7 +179,7 @@ class DeviceControllerTest extends TestCase {
             'name' => 'device 1',
             'employee_id' => 222,
         ], ['Authorization' => 'Bearer ' . $this->token]);
-        $response->assertStatus(200);
+        $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
             'message' => "Employee does not exist.",
@@ -198,7 +198,7 @@ class DeviceControllerTest extends TestCase {
             'name' => 'device 2',
             'employee_id' => 222,
         ], ['Authorization' => 'Bearer ' . $this->token]);
-        $response->assertStatus(200);
+        $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
             'message' => "Employee does not exist.",

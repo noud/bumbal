@@ -68,7 +68,7 @@ class EmployeeController extends ApiController
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Employee does not exist.',
-                ]);  
+                ], 422);  
             }                        
             Cache::forever('employee_' . $id, $employee);
         }
@@ -100,7 +100,7 @@ class EmployeeController extends ApiController
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Employee does not exist.',
-                ]);  
+                ], 422);  
             }                        
         }
         $employee->name = $request->name;
@@ -121,7 +121,7 @@ class EmployeeController extends ApiController
             return response()->json([
                 'status' => 'error',
                 'message' => 'Employee does not exist.',
-            ]);  
+            ], 422);  
         }
 
         // check if employee still has devices
@@ -129,7 +129,7 @@ class EmployeeController extends ApiController
             return response()->json([
                 'status' => 'error',
                 'message' => 'Employee still has devices.',
-            ]);  
+            ], 422);  
         }
 
         $employee->delete();

@@ -58,7 +58,7 @@ class DeviceController extends ApiController
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Employee does not exist.',
-                ]);  
+                ], 422);  
             }                        
             Cache::forever('employee_' . $request->employee_id, $employee);
         }
@@ -85,7 +85,7 @@ class DeviceController extends ApiController
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Device does not exist.',
-                ]);                          
+                ], 422);                          
             }
             Cache::forever('device_' . $id, $device);
         }
@@ -118,7 +118,7 @@ class DeviceController extends ApiController
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Employee does not exist.',
-                ]);  
+                ], 422);  
             }                        
             Cache::forever('employee_' . $request->employee_id, $employee);
         }
@@ -130,7 +130,7 @@ class DeviceController extends ApiController
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Device does not exist.',
-                ]);
+                ], 422);
             }
         }
         $device->name = $request->name;
@@ -152,7 +152,7 @@ class DeviceController extends ApiController
             return response()->json([
                 'status' => 'error',
                 'message' => 'Device does not exist.',
-            ]);
+            ], 422);
         }
         $device->delete();
         Cache::forget('device_' . $id);
