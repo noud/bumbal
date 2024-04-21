@@ -7,6 +7,7 @@ use App\Models\Device;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Validator;
 
 /**
 * Class DeviceController
@@ -36,10 +37,18 @@ class DeviceController extends ApiController
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'employee_id' => 'required|integer',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation fails',
+                'error' => $validator->errors()->messages(),
+            ], 422);       
+        }
 
         // check if employee exists
         $employee = Cache::get('employee_' . $request->employee_id);
@@ -88,10 +97,18 @@ class DeviceController extends ApiController
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'employee_id' => 'required|integer',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation fails',
+                'error' => $validator->errors()->messages(),
+            ], 422);       
+        }
 
         // check if employee exists
         $employee = Cache::get('employee_' . $request->employee_id);

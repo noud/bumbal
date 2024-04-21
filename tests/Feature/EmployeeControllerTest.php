@@ -175,4 +175,32 @@ class EmployeeControllerTest extends TestCase {
        ]);
     }
 
+    public function testAddEmployeeWithWrongFormField()
+    {
+        $response = $this->json('post', 'http://localhost/api/v1/employee', [
+            'nam' => 'Noud de Brouwer',
+        ], ['Authorization' => 'Bearer ' . $this->token]);
+        $response->assertStatus(422);
+        $response->assertJson([
+            'status' => 'error',
+            'message' => "Validation fails",
+       ]);
+    }
+
+    public function testUpdateEmployeeWithWrongFormField()
+    {
+        $response = $this->json('post', 'http://localhost/api/v1/employee', [
+            'name' => 'Noud de Brouwer',
+        ], ['Authorization' => 'Bearer ' . $this->token]);
+        $id = $response['employee']['id'];
+
+        $response = $this->json('put', 'http://localhost/api/v1/employee/' . $id, [
+            'nam' => 'Mortada Abdul Roda',
+        ], ['Authorization' => 'Bearer ' . $this->token]);
+        $response->assertStatus(422);
+        $response->assertJson([
+            'status' => 'error',
+            'message' => "Validation fails",
+       ]);
+    }
 }

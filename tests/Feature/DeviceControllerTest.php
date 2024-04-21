@@ -205,4 +205,35 @@ class DeviceControllerTest extends TestCase {
        ]);
     }
 
+    public function testAddDeviceWithWrongFormField()
+    {
+        $response = $this->json('post', 'http://localhost/api/v1/device', [
+            'nam' => 'device 1',
+            'employee_id' => $this->employee_id,
+        ], ['Authorization' => 'Bearer ' . $this->token]);
+        $response->assertStatus(422);
+        $response->assertJson([
+            'status' => 'error',
+            'message' => "Validation fails",
+       ]);
+    }
+
+    public function testUpdateDeviceWithWrongFormField()
+    {
+        $response = $this->json('post', 'http://localhost/api/v1/device', [
+            'name' => 'device 1',
+            'employee_id' => $this->employee_id,
+        ], ['Authorization' => 'Bearer ' . $this->token]);
+        $id = $response['device']['id'];
+
+        $response = $this->json('put', 'http://localhost/api/v1/device/' . $id, [
+            'nam' => 'device 2',
+            'employee_id' => $this->employee_id,
+        ], ['Authorization' => 'Bearer ' . $this->token]);
+        $response->assertStatus(422);
+        $response->assertJson([
+            'status' => 'error',
+            'message' => "Validation fails",
+       ]);
+    }
 }

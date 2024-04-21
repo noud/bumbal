@@ -6,6 +6,7 @@ use App\Http\Controllers\api\ApiController;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Validator;
 
 /**
 * Class EmployeeController
@@ -34,9 +35,17 @@ class EmployeeController extends ApiController
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation fails',
+                'error' => $validator->errors()->messages(),
+            ], 422);       
+        }
 
         $employee = Employee::create([
             'name' => $request->name,
@@ -72,9 +81,17 @@ class EmployeeController extends ApiController
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation fails',
+                'error' => $validator->errors()->messages(),
+            ], 422);       
+        }
 
         $employee = Cache::get('employee_' . $id);
         if ($employee === null) {
