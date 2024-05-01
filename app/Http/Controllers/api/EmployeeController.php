@@ -67,7 +67,7 @@ class EmployeeController extends ApiController
             if (!$employee) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Employee does not exist.',
+                    'message' => 'Employee does not exist',
                 ], 422);  
             }                        
             Cache::forever('employee_' . $id, $employee);
@@ -99,7 +99,7 @@ class EmployeeController extends ApiController
             if (!$employee) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Employee does not exist.',
+                    'message' => 'Employee does not exist',
                 ], 422);  
             }                        
         }
@@ -120,7 +120,7 @@ class EmployeeController extends ApiController
         if (!$employee) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Employee does not exist.',
+                'message' => 'Employee does not exist',
             ], 422);  
         }
 
@@ -128,7 +128,7 @@ class EmployeeController extends ApiController
         if ($employee->devices()->exists()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Employee still has devices.',
+                'message' => 'Employee still has devices',
             ], 422);  
         }
 

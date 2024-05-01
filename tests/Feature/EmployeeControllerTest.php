@@ -141,7 +141,7 @@ class EmployeeControllerTest extends TestCase {
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
-            'message' => "Employee does not exist.",
+            'message' => "Employee does not exist",
        ]);
     }
 
@@ -155,7 +155,7 @@ class EmployeeControllerTest extends TestCase {
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
-            'message' => "Employee does not exist.",
+            'message' => "Employee does not exist",
         ]);
     }
 
@@ -171,7 +171,7 @@ class EmployeeControllerTest extends TestCase {
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
-            'message' => "Employee does not exist.",
+            'message' => "Employee does not exist",
        ]);
     }
 
@@ -197,7 +197,7 @@ class EmployeeControllerTest extends TestCase {
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
-            'message' => "Employee still has devices.",
+            'message' => "Employee still has devices",
        ]);
     }
 

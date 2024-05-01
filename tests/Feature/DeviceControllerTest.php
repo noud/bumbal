@@ -161,7 +161,7 @@ class DeviceControllerTest extends TestCase {
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
-            'message' => "Device does not exist.",
+            'message' => "Device does not exist",
        ]);
     }
 
@@ -175,7 +175,7 @@ class DeviceControllerTest extends TestCase {
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
-            'message' => "Device does not exist.",
+            'message' => "Device does not exist",
         ]);
     }
 
@@ -192,7 +192,7 @@ class DeviceControllerTest extends TestCase {
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
-            'message' => "Device does not exist.",
+            'message' => "Device does not exist",
        ]);
     }
 
@@ -207,7 +207,7 @@ class DeviceControllerTest extends TestCase {
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
-            'message' => "Employee does not exist.",
+            'message' => "Employee does not exist",
        ]);
     }
 
@@ -230,7 +230,7 @@ class DeviceControllerTest extends TestCase {
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
-            'message' => "Employee does not exist.",
+            'message' => "Employee does not exist",
        ]);
     }
 
