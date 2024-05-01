@@ -75,7 +75,7 @@ For JWT authentication i add package ```php-open-source-saver/jwt-auth```.
 cd bumbal && .vendor/bin/sail composer require php-open-source-saver/jwt-auth
 ```
 I added <a href="https://github.com/noud/bumbal/blob/main/app/Http/Controllers/api/AuthController.php">AuthController.php</a>
-
+and made a middelware class <a href="https://github.com/noud/bumbal/blob/main/app/Http/Middleware/JwtMiddleware.php">JwtMiddleware.php</a>.
 ### API
 
 There are controllers for the API endpoints.
@@ -128,5 +128,7 @@ For the tests i have 3 classes:
 ### reference
 
 I did read the following articles as refference:
+
+-<a href="https://www.avyatech.com/rest-api-with-laravel-8-using-jwt-token/">REST API with Laravel 8 using JWT Token</a>
 
 -<a href="https://blog.logrocket.com/implementing-jwt-authentication-laravel-10/">Implementing JWT authentication in Laravel 10</a>
