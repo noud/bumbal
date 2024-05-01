@@ -21,22 +21,30 @@ class JwtMiddleware extends BaseMiddleware
     {
         try {
             $user = JWTAuth::parseToken()->authenticate();
-        } catch (Exception $e) {
+            // $token = JWTAuth::getToken();
+            // if (! $token = JWTAuth::parseToken()) {
+            //     //throw an exception
+            //     return response()->json([
+            //         'status' => 'error',
+            //         'message' => 'Authorization Token not found2'
+            //     ], 401);
+            // }
+            } catch (Exception $e) {
             if ($e instanceof \PHPOpenSourceSaver\JWTAuth\Exceptions\TokenInvalidException){
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Token is Invalid'
-                ]);
-            }else if ($e instanceof \PHPOpenSourceSaver\JWTAuth\Exceptions\TokenExpiredException){
+                ], 401);
+            } else if ($e instanceof \PHPOpenSourceSaver\JWTAuth\Exceptions\TokenExpiredException){
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Token is Expired'
-                ]);
-            }else{
+                ], 401);
+            } else {
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Authorization Token not found'
-                ]);
+                ], 401);
             }
         }
         return $next($request);

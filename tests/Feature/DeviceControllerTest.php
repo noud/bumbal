@@ -33,9 +33,11 @@ class DeviceControllerTest extends TestCase {
         $token = $response['authorisation']['token'];
         $this->token = $token;
 
-        $response = $this->json('post', 'http://localhost/api/v1/employee', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/employee', [
             'name' => 'Noud de Brouwer',
-        ], ['Authorization' => 'Bearer ' . $this->token]);       
+        ]);       
         $response->assertStatus(200);
         $employee_id = $response['employee']['id'];
         $this->employee_id = $employee_id;
@@ -49,10 +51,12 @@ class DeviceControllerTest extends TestCase {
 
     public function testAddDevice()
     {
-        $response = $this->json('post', 'http://localhost/api/v1/device', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/device', [
             'name' => 'device 1',
             'employee_id' => $this->employee_id,
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $response->assertStatus(200);
         $response->assertJson([
             'status' => 'success',
@@ -62,14 +66,17 @@ class DeviceControllerTest extends TestCase {
 
     public function testDeleteDevice()
     {
-        $response = $this->json('post', 'http://localhost/api/v1/device', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/device', [
             'name' => 'device 1',
             'employee_id' => $this->employee_id,
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $id = $response['device']['id'];
 
-        $response = $this->json('delete', 'http://localhost/api/v1/device/' . $id
-        , ['Authorization' => 'Bearer ' . $this->token]);
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('delete', 'http://localhost/api/v1/device/' . $id);
         $response->assertStatus(200);
         $response->assertJson([
             'status' => 'success',
@@ -79,14 +86,17 @@ class DeviceControllerTest extends TestCase {
 
     public function testShowDevice()
     {
-        $response = $this->json('post', 'http://localhost/api/v1/device', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/device', [
             'name' => 'device 1',
             'employee_id' => $this->employee_id,
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $id = $response['device']['id'];
 
-        $response = $this->json('get', 'http://localhost/api/v1/device/' . $id
-        , ['Authorization' => 'Bearer ' . $this->token]);
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('get', 'http://localhost/api/v1/device/' . $id);
         $response->assertStatus(200);
         $response->assertJson([
             'status' => 'success',
@@ -95,16 +105,20 @@ class DeviceControllerTest extends TestCase {
 
     public function testUpdateDevice()
     {
-        $response = $this->json('post', 'http://localhost/api/v1/device', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/device', [
             'name' => 'device 1',
             'employee_id' => $this->employee_id,
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $id = $response['device']['id'];
 
-        $response = $this->json('put', 'http://localhost/api/v1/device/' . $id, [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('put', 'http://localhost/api/v1/device/' . $id, [
             'name' => 'device 2',
             'employee_id' => $this->employee_id,
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $response->assertStatus(200);
         $response->assertJson([
             'status' => 'success',
@@ -114,18 +128,23 @@ class DeviceControllerTest extends TestCase {
 
     public function testDevices()
     {
-        $response = $this->json('post', 'http://localhost/api/v1/device', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/device', [
             'name' => 'device 1',
             'employee_id' => $this->employee_id,
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
 
-        $response = $this->json('post', 'http://localhost/api/v1/device', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/device', [
             'name' => 'device 2',
             'employee_id' => $this->employee_id,
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
 
-        $response = $this->json('get', 'http://localhost/api/v1/devices?page=1',
-        ['Authorization' => 'Bearer ' . $this->token]);
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('get', 'http://localhost/api/v1/devices?page=1');
         $response->assertStatus(200);
         $response->assertJson([
             'status' => 'success',
@@ -136,8 +155,9 @@ class DeviceControllerTest extends TestCase {
     {
         $id = 222;
 
-        $response = $this->json('delete', 'http://localhost/api/v1/device/' . $id
-        , ['Authorization' => 'Bearer ' . $this->token]);
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('delete', 'http://localhost/api/v1/device/' . $id);
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
@@ -149,8 +169,9 @@ class DeviceControllerTest extends TestCase {
     {
         $id = 222;
 
-        $response = $this->json('get', 'http://localhost/api/v1/device/' . $id
-        , ['Authorization' => 'Bearer ' . $this->token]);
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('get', 'http://localhost/api/v1/device/' . $id);
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
@@ -162,10 +183,12 @@ class DeviceControllerTest extends TestCase {
     {
         $id = 222;
 
-        $response = $this->json('put', 'http://localhost/api/v1/device/' . $id, [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('put', 'http://localhost/api/v1/device/' . $id, [
             'name' => 'device 2',
             'employee_id' => $this->employee_id,
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
@@ -175,10 +198,12 @@ class DeviceControllerTest extends TestCase {
 
     public function testAddDeviceWithNonExistendEmployee()
     {
-        $response = $this->json('post', 'http://localhost/api/v1/device', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/device', [
             'name' => 'device 1',
             'employee_id' => 222,
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
@@ -188,16 +213,20 @@ class DeviceControllerTest extends TestCase {
 
     public function testUpdateDeviceWithNonExistendEmployee()
     {
-        $response = $this->json('post', 'http://localhost/api/v1/device', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/device', [
             'name' => 'device 1',
             'employee_id' => $this->employee_id,
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $id = $response['device']['id'];
 
-        $response = $this->json('put', 'http://localhost/api/v1/device/' . $id, [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('put', 'http://localhost/api/v1/device/' . $id, [
             'name' => 'device 2',
             'employee_id' => 222,
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
@@ -207,10 +236,12 @@ class DeviceControllerTest extends TestCase {
 
     public function testAddDeviceWithWrongFormField()
     {
-        $response = $this->json('post', 'http://localhost/api/v1/device', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/device', [
             'nam' => 'device 1',
             'employee_id' => $this->employee_id,
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
@@ -220,16 +251,20 @@ class DeviceControllerTest extends TestCase {
 
     public function testUpdateDeviceWithWrongFormField()
     {
-        $response = $this->json('post', 'http://localhost/api/v1/device', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/device', [
             'name' => 'device 1',
             'employee_id' => $this->employee_id,
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $id = $response['device']['id'];
 
-        $response = $this->json('put', 'http://localhost/api/v1/device/' . $id, [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('put', 'http://localhost/api/v1/device/' . $id, [
             'nam' => 'device 2',
             'employee_id' => $this->employee_id,
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',

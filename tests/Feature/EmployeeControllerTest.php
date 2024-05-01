@@ -39,9 +39,11 @@ class EmployeeControllerTest extends TestCase {
 
     public function testAddEmployee()
     {
-        $response = $this->json('post', 'http://localhost/api/v1/employee', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/employee', [
             'name' => 'Noud de Brouwer',
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $response->assertStatus(200);
         $response->assertJson([
             'status' => 'success',
@@ -51,13 +53,16 @@ class EmployeeControllerTest extends TestCase {
 
     public function testDeleteEmployee()
     {
-        $response = $this->json('post', 'http://localhost/api/v1/employee', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/employee', [
             'name' => 'Mortada Abdul Roda',
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $id = $response['employee']['id'];
 
-        $response = $this->json('delete', 'http://localhost/api/v1/employee/' . $id
-        , ['Authorization' => 'Bearer ' . $this->token]);
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('delete', 'http://localhost/api/v1/employee/' . $id);
         $response->assertStatus(200);
         $response->assertJson([
             'status' => 'success',
@@ -67,13 +72,16 @@ class EmployeeControllerTest extends TestCase {
 
     public function testShowEmployee()
     {
-        $response = $this->json('post', 'http://localhost/api/v1/employee', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/employee', [
             'name' => 'Noud de Brouwer',
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $id = $response['employee']['id'];
 
-        $response = $this->json('get', 'http://localhost/api/v1/employee/' . $id
-        , ['Authorization' => 'Bearer ' . $this->token]);
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('get', 'http://localhost/api/v1/employee/' . $id);
         $response->assertStatus(200);
         $response->assertJson([
             'status' => 'success',
@@ -82,14 +90,18 @@ class EmployeeControllerTest extends TestCase {
 
     public function testUpdateEmployee()
     {
-        $response = $this->json('post', 'http://localhost/api/v1/employee', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/employee', [
             'name' => 'Noud de Brouwer',
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $id = $response['employee']['id'];
 
-        $response = $this->json('put', 'http://localhost/api/v1/employee/' . $id, [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('put', 'http://localhost/api/v1/employee/' . $id, [
             'name' => 'Mortada Abdul Roda',
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $response->assertStatus(200);
         $response->assertJson([
             'status' => 'success',
@@ -99,16 +111,21 @@ class EmployeeControllerTest extends TestCase {
 
     public function testEmployees()
     {
-        $response = $this->json('post', 'http://localhost/api/v1/employee', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/employee', [
             'name' => 'Noud de Brouwer',
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
 
-        $response = $this->json('post', 'http://localhost/api/v1/employee', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/employee', [
             'name' => 'Mortada Abdul Roda',
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
 
-        $response = $this->json('get', 'http://localhost/api/v1/employees', [
-            'Authorization' => 'Bearer ' . $this->token]);
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('get', 'http://localhost/api/v1/employees');
         $response->assertStatus(200);
         $response->assertJson([
             'status' => 'success',
@@ -118,8 +135,9 @@ class EmployeeControllerTest extends TestCase {
     {
         $id = 222;
 
-        $response = $this->json('delete', 'http://localhost/api/v1/employee/' . $id
-        , ['Authorization' => 'Bearer ' . $this->token]);
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('delete', 'http://localhost/api/v1/employee/' . $id);
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
@@ -131,8 +149,9 @@ class EmployeeControllerTest extends TestCase {
     {
         $id = 222;
 
-        $response = $this->json('get', 'http://localhost/api/v1/employee/' . $id
-        , ['Authorization' => 'Bearer ' . $this->token]);
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('get', 'http://localhost/api/v1/employee/' . $id);
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
@@ -144,9 +163,11 @@ class EmployeeControllerTest extends TestCase {
     {
         $id = 222;
 
-        $response = $this->json('put', 'http://localhost/api/v1/employee/' . $id, [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('put', 'http://localhost/api/v1/employee/' . $id, [
             'name' => 'Mortada Abdul Roda',
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
@@ -156,18 +177,23 @@ class EmployeeControllerTest extends TestCase {
 
     public function testDeleteEmployeeThatHasDevices()
     {
-        $response = $this->json('post', 'http://localhost/api/v1/employee', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/employee', [
             'name' => 'Noud de Brouwer',
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $id = $response['employee']['id'];
 
-        $response = $this->json('post', 'http://localhost/api/v1/device', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/device', [
             'name' => 'device 1',
             'employee_id' => $id,
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
      
-        $response = $this->json('delete', 'http://localhost/api/v1/employee/' . $id
-        , ['Authorization' => 'Bearer ' . $this->token]);
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('delete', 'http://localhost/api/v1/employee/' . $id);
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
@@ -177,9 +203,11 @@ class EmployeeControllerTest extends TestCase {
 
     public function testAddEmployeeWithWrongFormField()
     {
-        $response = $this->json('post', 'http://localhost/api/v1/employee', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/employee', [
             'nam' => 'Noud de Brouwer',
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
@@ -189,18 +217,58 @@ class EmployeeControllerTest extends TestCase {
 
     public function testUpdateEmployeeWithWrongFormField()
     {
-        $response = $this->json('post', 'http://localhost/api/v1/employee', [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/employee', [
             'name' => 'Noud de Brouwer',
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $id = $response['employee']['id'];
 
-        $response = $this->json('put', 'http://localhost/api/v1/employee/' . $id, [
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('put', 'http://localhost/api/v1/employee/' . $id, [
             'nam' => 'Mortada Abdul Roda',
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+        ]);
         $response->assertStatus(422);
         $response->assertJson([
             'status' => 'error',
             'message' => "Validation fails",
        ]);
     }
+
+    public function testShowEmployeeWithInvalidToken()
+    {
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/employee', [
+            'name' => 'Noud de Brouwer',
+        ]);
+        $id = $response['employee']['id'];
+
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . 'x' . $this->token,
+        ])->json('get', 'http://localhost/api/v1/employee/' . $id);
+        $response->assertStatus(401);
+        $response->assertJson([
+            'status' => 'error',
+            'message' => "Token is Invalid",
+        ]);
+    }
+
+    // public function testShowEmployeeWithoutToken()
+    // {
+    //     $response = $this->withHeaders([
+    //         'Authorization' => "Bearer " . $this->token,
+    //     ])->json('post', 'http://localhost/api/v1/employee', [
+    //         'name' => 'Noud de Brouwer',
+    //     ]);
+    //     $id = $response['employee']['id'];
+
+    //     $response = $this->json('get', 'http://localhost/api/v1/employee/' . $id);
+    //     // $response->assertStatus(401);
+    //     $response->assertJson([
+    //         'status' => 'error',
+    //         'message' => "Authorization Token not found",
+    //     ]);
+    // }
 }
