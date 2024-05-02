@@ -57,6 +57,29 @@ class AuthControllerTest extends TestCase {
         $token = $response['authorisation']['token'];
     }
 
+    public function testRefresh()
+    {
+        $response = $this->json('post', 'http://localhost/api/v1/register', [
+            'name' => 'noud3',
+            'email' => 'noud3@home.nl',
+            'password' => 'test1234',
+        ]);
+
+        $response = $this->json('post', 'http://localhost/api/v1/login', [
+            'email' => 'noud3@home.nl',
+            'password' => 'test1234',
+        ]);       
+        $token = $response['authorisation']['token'];
+
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $token,
+        ])->json('post', 'http://localhost/api/v1/refresh');
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 'success',
+        ]);
+    }
+
     public function testRegisterWithWrongFormField()
     {
         $response = $this->json('post', 'http://localhost/api/v1/register', [
