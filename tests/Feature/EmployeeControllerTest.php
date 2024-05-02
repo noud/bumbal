@@ -275,4 +275,25 @@ class EmployeeControllerTest extends TestCase {
     //         'message' => "Authorization Token not found",
     //     ]);
     // }
+
+    public function testShowEmployeeWithExpiredToken()
+    {
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('post', 'http://localhost/api/v1/employee', [
+            'name' => 'Noud de Brouwer',
+        ]);
+        $id = $response['employee']['id'];
+
+        $this->travel(2)->hours();
+
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer " . $this->token,
+        ])->json('get', 'http://localhost/api/v1/employee/' . $id);
+        $response->assertStatus(401);
+        $response->assertJson([
+            'status' => 'error',
+            'message' => "Token is Expired",
+        ]);
+    }
 }
