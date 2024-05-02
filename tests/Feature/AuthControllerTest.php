@@ -34,24 +34,11 @@ class AuthControllerTest extends TestCase {
             'email' => 'noud5@home.nl',
             'password' => 'test1234',
         ]);
-        // $this->assertEquals(200, $this->response->status());
         $response->assertStatus(200);
-        // ->assertJson([
-    //     $this->seeJsonEquals([
-    //         'status' => 'success',
-    //         'message' => "User created successfully",
-    //         'user' => [
-    //                 'name',
-    //                 'email',
-    //                 'updated_at',
-    //                 'created_at',
-    //                 'id',
-    //             ],
-    //         'authorisation' => [
-    //             'token',
-    //             'type' => 'bearer',
-    //         ]
-    //    ]);
+        $response->assertJson([
+            'status' => 'success',
+            'message' => "User created successfully",
+       ]);
     }
 
     public function testLogin()
@@ -68,6 +55,39 @@ class AuthControllerTest extends TestCase {
         ]);       
         $response->assertStatus(200);
         $token = $response['authorisation']['token'];
-        // dd($token);
     }
+
+    public function testRegisterWithWrongFormField()
+    {
+        $response = $this->json('post', 'http://localhost/api/v1/register', [
+            'nam' => 'noud5',
+            'email' => 'noud5@home.nl',
+            'password' => 'test1234',
+        ]);
+        $response->assertStatus(422);
+        $response->assertJson([
+            'status' => 'error',
+            'message' => "Validation fails",
+       ]);
+    }
+
+    public function testLoginWithWrongFormField()
+    {
+        $response = $this->json('post', 'http://localhost/api/v1/register', [
+            'name' => 'noud3',
+            'email' => 'noud3@home.nl',
+            'password' => 'test1234',
+        ]);
+
+        $response = $this->json('post', 'http://localhost/api/v1/login', [
+            'emai' => 'noud3@home.nl',
+            'password' => 'test1234',
+        ]);       
+        $response->assertStatus(422);
+        $response->assertJson([
+            'status' => 'error',
+            'message' => "Validation fails",
+       ]);
+    }
+
 }

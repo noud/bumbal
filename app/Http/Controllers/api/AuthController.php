@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\api\ApiController;
 use App\Models\User;
 
@@ -17,10 +18,19 @@ class AuthController extends ApiController
 
     public function login(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation fails',
+                'error' => $validator->errors()->messages(),
+            ], 422);       
+        }
+
         $credentials = $request->only('email', 'password');
 
         $token = Auth::attempt($credentials);
@@ -44,11 +54,19 @@ class AuthController extends ApiController
     }
 
     public function register(Request $request){
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation fails',
+                'error' => $validator->errors()->messages(),
+            ], 422);       
+        }
 
         $user = User::create([
             'name' => $request->name,
