@@ -51,6 +51,7 @@ class EmployeeController extends ApiController
             'name' => $request->name,
         ]);
         Cache::forever('employee_' . $employee->id, $employee);
+        Cache::forget('employees');
 
         return response()->json([
             'status' => 'success',
@@ -106,6 +107,7 @@ class EmployeeController extends ApiController
         $employee->name = $request->name;
         $employee->save();
         Cache::forever('employee_' . $id, $employee);
+        Cache::forget('employees');
 
         return response()->json([
             'status' => 'success',
@@ -134,6 +136,7 @@ class EmployeeController extends ApiController
 
         $employee->delete();
         Cache::forget('employee_' . $id);
+        Cache::forget('employees');
 
         return response()->json([
             'status' => 'success',

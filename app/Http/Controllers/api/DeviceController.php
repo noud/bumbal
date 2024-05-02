@@ -68,6 +68,7 @@ class DeviceController extends ApiController
             'employee_id' => $request->employee_id,
         ]);
         Cache::forever('device_' . $device->id, $device);
+        $this->forgetDevicesPageCaches();
 
         return response()->json([
             'status' => 'success',
@@ -137,6 +138,7 @@ class DeviceController extends ApiController
         $device->employee_id = $request->employee_id;
         $device->save();
         Cache::forever('device_' . $id, $device);
+        $this->forgetDevicesPageCaches();
 
         return response()->json([
             'status' => 'success',
@@ -156,11 +158,21 @@ class DeviceController extends ApiController
         }
         $device->delete();
         Cache::forget('device_' . $id);
+        $this->forgetDevicesPageCaches();
 
         return response()->json([
             'status' => 'success',
             'message' => 'Device deleted successfully',
             'device' => $device,
         ]);
+    }
+
+    private function forgetDevicesPageCaches()
+    {
+        $devices = Device::paginate($perPage = 5, ['*'], 'page', 1)->toArray();
+        $pages = $devices['last_page'];
+        for ($page = 1; $page <= $pages; $page++) {
+            Cache::forget('devices_page_' . $page);
+          }
     }
 }
