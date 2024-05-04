@@ -34,6 +34,8 @@ cd bumbal && ./vendor/bin/sail artisan jwt:secret
 cd bumbal && ./vendor/bin/sail artisan migrate
 ```
 
+If you are on Windows WSL2 Ubuntu follow the steps in <a href="https://stackoverflow.com/questions/66412753/unsupported-operating-system-with-docker-on-windows-10-with-wsl2">Unsupported operating system with Docker on windows 10 with wsl2</a> or <a href="https://stackoverflow.com/questions/69876743/unsupported-operating-system-laravel-8-with-sail-on-windows-10-wsl2">Unsupported operating system Laravel 8 with Sail on Windows 10 (WSL2)</a>.
+
 Finally, you can access the application in your web browser at: <a href="http://localhost">http://localhost</a>.
 
 I get an error,
