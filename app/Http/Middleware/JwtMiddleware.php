@@ -21,14 +21,6 @@ class JwtMiddleware extends BaseMiddleware
     {
         try {
             $user = JWTAuth::parseToken()->authenticate();
-            // $token = JWTAuth::getToken();
-            // if (! $token = JWTAuth::parseToken()) {
-            //     //throw an exception
-            //     return response()->json([
-            //         'status' => 'error',
-            //         'message' => 'Authorization Token not found2'
-            //     ], 401);
-            // }
             } catch (Exception $e) {
             if ($e instanceof \PHPOpenSourceSaver\JWTAuth\Exceptions\TokenInvalidException){
                 return response()->json([
